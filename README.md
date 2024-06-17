@@ -71,16 +71,15 @@ done
 
 # run this script to get coverage sums from each sample
 
-`
+```
 #!/bin/bash
 
 for t in *.txt ; do
 	N=$(basename $t .txt) ;
 	awk 'NR > 1 { sum += $4 } END { print sum }' $t > $N.counts ;
 done
-
 cat *.counts > merged.counts
-`
+```
 
 ## Running Dapars2
 

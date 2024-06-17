@@ -4,7 +4,7 @@ This is an imperfect protocol and still under development
 
 ## Align reads with STAR, soft alignment constraints. Convert sam to bam, sort, index and gather coverage info
 
-`
+```
 ml star/2.7.10a
 
 for i in *_R1_001.fastq.gz; do name=$(basename ${i} _R1_001.fastq.gz);
@@ -37,37 +37,37 @@ for b in *.sorted.bam; do
     N=$(basename $B .sorted.bam) ;
     samtools coverage -o ${N}.txt $b ;
 done
-`
+```
 
 ## Generate genome coverage bedgraphs from bam files
 
-`
+```
 for b in *.sorted.bam; do
 	N=$(basename $b .sorted.bam) ;
 	bedtools genomecov -ibam $b -bga -split -trackline > $N.bedgraph ;
 done
-`
+```
 
 ## Generate samtools coverages to coverage input in DaPars2
 
-`
+```
 module load samtools/1.10
 
 for b in *.sorted.bam; do
     N=$(basename $b .sorted.bam) ;
     samtools coverage -o ${N}.txt $b ;
 done
-`
+```
 # run the reduce_chrs.sh script to get chromosomes from samtools coverage output
 
-`
+```
 #!/bin/bash
 
 for t in *.txt ; do
 	N=$(basename $t .txt) ;
 	head -n 26 $t > $N.reduced.txt ;
 done
-`
+```
 
 # run this script to get coverage sums from each sample
 
@@ -92,17 +92,17 @@ dapars.config
 sample_coverages.txt
 RefSeq_hg38_3UTR_annotation.bed
 
-`
+```
 conda activate dapars
 
 python3 ../DaPars2/src/DaPars2_Multi_Sample_Multi_Chr.py dapars.config chrList.txt
-`
+```
 
 # Moving raw dapars2 for statistical analysis in R
 
 You need to move all chromosome output into one dir, as well as create a meta data file like the sample_meta.txt, you can do this in excel
 
-`
+```
 mkdir output
 cp */*.txt output/
-`
+```

@@ -127,6 +127,9 @@ write.table(df, file = "data/dPDUI_Significant_Results.txt", sep = "\t",
 
 write.table(group_stats, file = "data/group_stats_reduced.txt", sep = "\t", row.names = F, quote = F)
 
+sig_results <- df
 
-
-
+sig_results %>%
+  filter(comparison == "NTC_vs_IL6_24_hours") %>%
+ggplot(aes(x = dPDUI, y = -log10(p_value))) +
+  geom_point()
